@@ -1,0 +1,60 @@
+/* เต็มพื้นที่หน้าต่าง โดยฟอร์มยังเลื่อนได้เมื่อจอเตี้ยหรือเปิดคีย์บอร์ด */
+html, body { min-height: 100%; margin: 0; }
+.auth-page { padding: 0; display: block; }
+.auth-scene { max-width: none; min-height: 100dvh; border: 0; border-radius: 0; box-shadow: none; display: flow-root; }
+.auth-card { margin-top: clamp(130px, 18dvh, 190px); margin-bottom: 70px; box-shadow: 0 18px 65px #37559232; }
+.auth-signup .auth-card { margin-top: max(38px, calc((100dvh - 750px) / 2)); }
+.auth-card h2 { color: #23355d; }
+.auth-switch { margin-top: 26px; }
+.mn-body { max-width: none; min-height: calc(100dvh - 110px); }
+.mn-content { background: radial-gradient(ellipse at 100% 0, #ffe7f48c, transparent 48%), radial-gradient(ellipse at 5% 100%, #d4edff, transparent 65%); }
+.room-panel { overflow-y: auto; }
+.conversation-panel { overflow: hidden; }
+.conversation-panel > header { flex-shrink: 0; }
+.conversation-panel > div { min-height: 0; }
+.conversation-panel .message-composer { flex-shrink: 0; }
+.rail-card, .glass, .room-panel, .conversation-panel { border: 1px solid #ffffffd9; box-shadow: 0 8px 28px #75a5d21a; }
+.room-avatar, .letter-avatar { box-shadow: 0 4px 12px #6aa7d52b; }
+.conversation-panel article > p { box-shadow: 0 4px 14px #81a5ce16; }
+.conversation-panel article.items-end > p { box-shadow: 0 5px 16px #f080b331; }
+.field:focus { background: #fff; border-color: #77c6ff; box-shadow: 0 0 0 4px #5ab9ff16; }
+.side-link.active { box-shadow: 0 6px 18px #fa71ad33; }
+.side-link, .room-link, .primary, .soft-button, .field, .auth-switch a, .mobile-navigation a, .rail-action { transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
+.primary:active, .soft-button:active, .room-link:active { transform: scale(.97); }
+.mobile-navigation { display: none; backdrop-filter: blur(16px); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+.mobile-navigation a[aria-current=page] { background: #fff0f7; border-radius: 14px; }
+@media (hover: hover) {
+  .primary:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 8px 22px #fd6ab23d; }
+  .soft-button:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 4px 12px #6baedf26; }
+  .side-link:not(.active):hover { background: #edf7ff; color: #268ce4; transform: translateX(3px); }
+  .room-link:not(.selected):hover { background: #f0f8ff; }
+  .auth-switch a:hover, .rail-action:hover { color: #de4596; }
+}
+@media (min-width: 768px) and (max-height: 740px) {
+  .auth-card { margin-top: 110px; margin-bottom: 65px; padding: 24px 32px; }
+  .auth-signup .auth-card { margin-top: 30px; margin-bottom: 30px; }
+  .card-brand { margin-bottom: 18px; }
+  .auth-fields { gap: 12px; }
+  .auth-signup .auth-fields { gap: 10px; }
+}
+@media (max-width: 767px) {
+  .auth-page { padding: 0; }
+  .auth-scene { min-height: 100dvh; }
+  .auth-top { padding: 25px 18px; }
+  .auth-card, .auth-signup .auth-card { width: calc(100% - 32px); margin: 12px auto 28px; padding: 28px 24px; }
+  .mn-body { min-height: calc(100dvh - 82px); }
+  .mobile-navigation { display: flex; }
+  .mn-content { padding-bottom: calc(86px + env(safe-area-inset-bottom)); }
+  .conversation-panel { height: calc(100dvh - 340px); min-height: 320px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .auth-card, .rail-card { animation: soft-arrival 420ms ease-out both; }
+  .conversation-panel article { animation: message-arrival 240ms ease-out both; }
+  .mn-mark { animation: brand-arrival 700ms ease-out both; }
+  @keyframes soft-arrival { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes message-arrival { from { opacity: 0; transform: translateY(6px) scale(.99); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  @keyframes brand-arrival { from { opacity: 0; transform: scale(.9) rotate(-6deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

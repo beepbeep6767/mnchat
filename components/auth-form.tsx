@@ -63,7 +63,6 @@ export function AuthForm({ mode }: { mode: Mode }) {
           {notice && <p role="status" className="rounded-xl bg-blue-50 p-3 text-sm text-blue-700">{notice}</p>}
           <button disabled={busy} className="primary auth-submit">{busy ? 'กำลังดำเนินการ…' : mode === 'signup' ? 'สร้างบัญชี →' : mode === 'reset' ? 'ส่งลิงก์เปลี่ยนรหัสผ่าน →' : 'เข้าสู่ระบบ →'}</button>
         </form>
-        {mode !== 'reset' && <><div className="auth-divider"><span>หรือ</span></div><button type="button" disabled className="google-button" title="ยังไม่ได้เปิด Google OAuth"><span className="google-g">G</span>{mode === 'signup' ? 'สมัครด้วย Google' : 'เข้าสู่ระบบด้วย Google'}<span className="sr-only">ยังไม่เปิดใช้งาน</span></button></>}
         <p className="auth-switch">{mode === 'login' ? 'ยังไม่มีบัญชี? ' : 'มีบัญชีอยู่แล้ว? '}<Link href={mode === 'login' ? '/signup' : '/login'} className="font-bold text-school-pink">{mode === 'login' ? 'สมัครสมาชิกที่นี่' : 'เข้าสู่ระบบที่นี่'} →</Link></p>
         
       </section>

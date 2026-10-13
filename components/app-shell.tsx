@@ -22,6 +22,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <aside className="mn-sidebar"><nav className="side-navigation">{navigation.map(item => <Link key={item.href} href={item.href} className={`side-link ${pathname === item.href ? 'active' : ''}`}><Icon name={item.icon} size={28}/>{item.label}</Link>)}</nav><div className="school-poster"><strong>MN<br/><em>School</em></strong><p>“เพื่อนช่วยเพื่อน<br/>สร้างสังคมการเรียนรู้”</p></div><p className="mt-5 px-3 text-[10px] text-school-muted">MNChat 1.0 · MN School Community</p></aside>
       <main className="mn-content enter">{children}</main>
     </div>
-    <nav aria-label="เมนูมือถือ" className="fixed bottom-0 left-0 right-0 z-20 flex justify-around border-t border-blue-100 bg-white/95 py-3 lg:hidden">{navigation.map(item => <Link key={item.href} href={item.href} className={`flex flex-col items-center gap-1 px-6 text-xs ${pathname === item.href ? 'font-bold text-school-pink' : 'text-school-muted'}`}><span className="text-2xl">{item.icon}</span>{item.label}</Link>)}</nav>
+    <nav aria-label="เมนูมือถือ" className="mobile-navigation fixed bottom-0 left-0 right-0 z-20 flex justify-around border-t border-blue-100 bg-white/95 py-3 lg:hidden">{navigation.map(item => <Link key={item.href} href={item.href} aria-current={pathname === item.href ? 'page' : undefined} className={`flex flex-col items-center gap-1 px-3 text-xs ${pathname === item.href ? 'font-bold text-school-pink' : 'text-school-muted'}`}><Icon name={item.icon} size={24}/>{item.label}</Link>)}</nav>
   </div>;
 }
