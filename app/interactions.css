@@ -1,0 +1,71 @@
+/* ลูกเล่นใช้ transform เพื่อไม่ดันองค์ประกอบข้าง ๆ ขณะชี้หรือกด */
+:where(.mn-app, .auth-page) button,
+:where(.mn-app, .auth-page) a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 220ms cubic-bezier(.2,.8,.25,1.2), box-shadow 220ms ease,
+    background-color 220ms ease, color 180ms ease, border-color 180ms ease;
+}
+.auth-switch a, .rail-action { display: inline-block; }
+.primary { position: relative; isolation: isolate; }
+.primary::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: radial-gradient(ellipse at center, #ffffff55, transparent 75%);
+  opacity: 0; pointer-events: none; transition: opacity 180ms ease;
+}
+.side-link svg, .room-avatar, .send-button svg, .mobile-navigation svg {
+  transition: transform 220ms cubic-bezier(.2,.8,.25,1.2), filter 220ms ease;
+}
+:where(.mn-app, .auth-page) button:not(:disabled):focus-visible,
+:where(.mn-app, .auth-page) a:focus-visible {
+  outline: 2px solid #279aff; outline-offset: 4px;
+  box-shadow: 0 0 0 6px #67c5ff24;
+}
+.auth-fields label:focus-within::before { filter: saturate(1.7); }
+.message-composer:focus-within { box-shadow: inset 0 2px 0 #95d7ff; }
+@media (hover: hover) and (pointer: fine) {
+  :where(.mn-app, .auth-page) button:not(:disabled):hover {
+    transform: translateY(-2px) scale(1.035);
+  }
+  .primary:not(:disabled):hover {
+    transform: translateY(-3px) scale(1.045);
+    box-shadow: 0 10px 25px #fb6caf45, 0 3px 10px #60b8ff25;
+  }
+  .primary:not(:disabled):hover::after { opacity: .45; }
+  .soft-button:not(:disabled):hover { transform: translateY(-2px) scale(1.04); }
+  .side-link:hover {
+    transform: translateX(3px) scale(1.025);
+    box-shadow: 0 6px 20px #80bcea26;
+  }
+  .side-link.active:hover { box-shadow: 0 8px 24px #fa71ad50; }
+  .side-link:hover svg { transform: scale(1.14) rotate(-5deg); }
+  .room-link:not(:disabled):hover {
+    transform: scale(1.015); z-index: 1;
+    box-shadow: 0 5px 18px #8bb6da24;
+  }
+  .room-link:hover .room-avatar { transform: scale(1.08); }
+  .send-button:not(:disabled):hover { transform: scale(1.12) rotate(-4deg); }
+  .send-button:not(:disabled):hover svg { transform: translate(1px,-1px); }
+  .auth-switch a:hover, .rail-action:hover { transform: translateY(-2px) scale(1.04); }
+  .mobile-navigation a:hover { transform: translateY(-3px) scale(1.04); }
+  .mobile-navigation a:hover svg { transform: scale(1.1); }
+  .rail-card h2 a:hover { color: #f35ca9; text-decoration: underline; text-underline-offset: 4px; }
+}
+/* อยู่หลัง hover เพื่อให้ปุ่มยุบเมื่อกด แม้เมาส์ยังวางอยู่ */
+:where(.mn-app, .auth-page) button:not(:disabled):active,
+.primary:not(:disabled):active, .soft-button:not(:disabled):active,
+.room-link:not(:disabled):active, .send-button:not(:disabled):active {
+  transform: scale(.95); box-shadow: 0 2px 7px #6a9bcb24;
+  transition-duration: 80ms;
+}
+.primary:not(:disabled):active::after { opacity: .8; }
+.side-link:active, .mobile-navigation a:active, .auth-switch a:active,
+.rail-action:active { transform: scale(.96); transition-duration: 80ms; }
+:where(.mn-app, .auth-page) button:disabled { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  :where(.mn-app, .auth-page) button, :where(.mn-app, .auth-page) a,
+  .side-link svg, .room-avatar, .send-button svg, .mobile-navigation svg {
+    transform: none !important; transition: none !important;
+  }
+  .primary::after { transition: none; }
+}
