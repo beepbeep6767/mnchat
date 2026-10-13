@@ -23,6 +23,38 @@
 }
 .auth-fields label:focus-within::before { filter: saturate(1.7); }
 .message-composer:focus-within { box-shadow: inset 0 2px 0 #95d7ff; }
+.auth-fields > label { transition: transform 200ms ease; }
+.auth-fields > label::before { transition: transform 200ms ease, filter 200ms ease; }
+.auth-fields .field, .mn-app .field, .header-search {
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease,
+    background-color 200ms ease;
+}
+.auth-fields > label:focus-within { transform: translateY(-2px); }
+.auth-fields > label:focus-within::before { transform: scale(1.12); filter: saturate(2); }
+.auth-fields .field:focus, .mn-app .field:focus {
+  background-color: #fff; border-color: #61b8ff;
+  box-shadow: 0 0 0 4px #70c3ff26, 0 7px 22px #e990bd20;
+}
+.mn-app .field:focus { transform: translateY(-1px); }
+.header-search:focus-within {
+  transform: translateY(-2px); border-color: #66baff;
+  box-shadow: 0 0 0 4px #70c3ff26, 0 8px 22px #79b8e52b;
+  background-color: #fff;
+}
+.auth-fields .field:focus-visible, .mn-app .field:focus-visible,
+.header-search input:focus-visible { outline: 2px solid #279aff; outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .auth-fields > label:hover:not(:focus-within) { transform: translateY(-1px); }
+  .auth-fields .field:not(:disabled):hover, .mn-app .field:not(:disabled):hover {
+    border-color: #aacfff; background-color: #ffffffed;
+    box-shadow: 0 5px 16px #76b5e521;
+  }
+  .auth-fields .field:focus:hover, .mn-app .field:focus:hover {
+    border-color: #61b8ff; background-color: #fff;
+    box-shadow: 0 0 0 4px #70c3ff26, 0 7px 22px #e990bd20;
+  }
+  .header-search:hover:not(:focus-within) { transform: translateY(-1px); box-shadow: 0 5px 18px #79b8e529; }
+}
 @media (hover: hover) and (pointer: fine) {
   :where(.mn-app, .auth-page) button:not(:disabled):hover {
     transform: translateY(-2px) scale(1.035);
@@ -68,4 +100,9 @@
     transform: none !important; transition: none !important;
   }
   .primary::after { transition: none; }
+  .auth-fields > label, .auth-fields > label::before,
+  .auth-fields .field, .mn-app .field, .header-search {
+    transform: none !important; transition: none !important;
+  }
 }
+
