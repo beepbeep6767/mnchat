@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function Page() { return <main className="pastel flex min-h-screen items-center justify-center p-6"><section className="glass max-w-md p-8"><h1 className="text-xl font-bold">เปิดลิงก์ยืนยันไม่สำเร็จ</h1><p className="my-5 text-school-muted">ลิงก์อาจหมดอายุหรือถูกใช้แล้ว ลองเข้าสู่ระบบ หรือขอลิงก์เปลี่ยนรหัสผ่านใหม่</p><Link className="primary inline-block" href="/login">กลับไปเข้าสู่ระบบ</Link></section></main>; }
