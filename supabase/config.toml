@@ -1,0 +1,3 @@
+[functions.username-auth]
+# จุดเข้าสู่ระบบตรวจชื่อผู้ใช้/รหัสผ่านเอง ก่อนให้ Supabase ออก session
+verify_jwt = false

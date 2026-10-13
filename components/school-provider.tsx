@@ -2,7 +2,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { errorMessage, schoolEmail } from '@/lib/helpers';
+import { errorMessage } from '@/lib/helpers';
 import type { Profile } from '@/types/database';
 import { Status } from './status';
 const Context = createContext<Profile | null>(null);
@@ -16,7 +16,6 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       const client = createClient(); const { data, error: authError } = await client.auth.getUser();
       if (authError && authError.name !== 'AuthSessionMissingError') throw authError;
       if (!data.user) { router.replace('/login'); return; }
-      if (!schoolEmail(data.user.email ?? '') || !data.user.email_confirmed_at) throw new Error('school_email');
       const { data: result, error: failure } = await client.from('profiles').select('*').eq('id', data.user.id).single();
       if (failure) throw failure; setProfile(result);
     } catch (failure) { setError(errorMessage(failure)); } finally { setLoading(false); }

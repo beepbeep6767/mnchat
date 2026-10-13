@@ -3,7 +3,7 @@ export function errorMessage(error: unknown): string {
   if (message.includes('Invalid login')) return 'อีเมลหรือรหัสผ่านไม่ถูกต้อง';
   if (message.includes('Email not confirmed')) return 'กรุณายืนยันอีเมลก่อนเข้าสู่ระบบ';
   if (message.includes('rate') || message.includes('spam')) return 'ส่งเร็วเกินไป กรุณารอสักครู่แล้วลองใหม่';
-  if (message.includes('school_email')) return 'ต้องใช้อีเมล @mh.ac.th ที่ยืนยันแล้วเท่านั้น';
+  if (message.includes('school_email')) return 'บัญชีนี้ยังไม่มีสิทธิ์ใช้งาน กรุณาติดต่อผู้ดูแล';
   if (message.includes('already_registered') || message.includes('already been registered')) return 'อีเมลนี้มีบัญชีอยู่แล้ว';
   if (message.includes('duplicate') || message.includes('username_taken')) return 'ชื่อผู้ใช้นี้ถูกใช้แล้ว';
   if (message.includes('daily_kudos_limit')) return 'วันนี้คุณให้เกียรติยศครบ 5 คนแล้ว กลับมาใหม่วันพรุ่งนี้';

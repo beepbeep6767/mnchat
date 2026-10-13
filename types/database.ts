@@ -1,9 +1,9 @@
-export type Profile = { id: string; username: string; grade: number; full_name: string | null; created_at: string };
+export type Profile = { id: string; username: string; grade: number | null; full_name: string | null; created_at: string };
 export type Room = { id: string; name: string; description: string; created_at: string };
 export type Message = { id: string; room_id: string; author_id: string; content: string; created_at: string };
 export type Post = { id: string; author_id: string; content: string; created_at: string };
 export type Kudos = { id: string; sender_id: string; recipient_id: string; created_at: string };
-export type Ranking = { id: string; username: string; grade: number; score: number };
+export type Ranking = { id: string; username: string; grade: number | null; score: number };
 type Table<Row, Insert, Update> = { Row: Row; Insert: Insert; Update: Update; Relationships: [] };
 export type Database = {
   public: {
