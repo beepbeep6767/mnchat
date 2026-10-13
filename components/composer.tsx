@@ -3,6 +3,7 @@ import { useState, type FormEvent } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { errorMessage } from '@/lib/helpers';
 import { useProfile } from './school-provider';
+import { Icon } from './icon';
 export function Composer({ table, roomId, onSent }: { table: 'messages' | 'posts'; roomId?: string; onSent: () => Promise<void> }) {
   const profile = useProfile(); const [content, setContent] = useState('');
   const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [lastSent, setLastSent] = useState(0);
@@ -22,9 +23,9 @@ export function Composer({ table, roomId, onSent }: { table: 'messages' | 'posts
       setContent(''); setLastSent(Date.now()); await onSent();
     } catch (failure) { setError(errorMessage(failure)); } finally { setBusy(false); }
   }
-  return <form onSubmit={submit} className="border-t border-blue-100 bg-white/75 p-4">
+  return <form onSubmit={submit} className={`message-composer ${table === 'messages' ? 'chat-composer' : ''}`}>
     <label className="sr-only" htmlFor={`compose-${table}`}>{table === 'messages' ? 'ข้อความแชท' : 'โพสต์ใหม่'}</label>
-    <div className="flex items-end gap-3"><textarea id={`compose-${table}`} value={content} disabled={busy} onChange={event => setContent(event.target.value)} maxLength={max} rows={table === 'posts' ? 3 : 2} placeholder={table === 'posts' ? 'วันนี้มีเรื่องอะไรอยากแบ่งปันกับเพื่อน ๆ ?' : 'พิมพ์ข้อความ…'} className="field resize-none"/><button disabled={busy || !content.trim()} className="primary shrink-0">{busy ? 'กำลังส่ง' : 'ส่ง ↗'}</button></div>
+    <div className="flex items-end gap-3"><textarea id={`compose-${table}`} value={content} disabled={busy} onChange={event => setContent(event.target.value)} maxLength={max} rows={table === 'posts' ? 3 : 1} placeholder={table === 'posts' ? 'วันนี้มีเรื่องอะไรอยากแบ่งปันกับเพื่อน ๆ ?' : 'พิมพ์ข้อความ…'} className="field resize-none"/><button disabled={busy || !content.trim()} className="primary send-button">{busy ? '…' : <><Icon name="send"/><span className="sr-only">ส่งข้อความ</span></>}</button></div>
     <div className="mt-2 flex justify-between text-[11px] text-school-muted"><span>พื้นที่ดี ๆ เริ่มจากคำพูดดี ๆ ♡</span><span>{content.length}/{max}</span></div>
     {error && <p role="alert" className="mt-3 text-sm text-rose-700">{error}</p>}
   </form>;
