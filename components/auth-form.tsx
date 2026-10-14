@@ -47,6 +47,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
           <label className="block text-sm">รหัสผ่าน<div className="relative mt-2"><input name="password" placeholder="รหัสผ่าน (อย่างน้อย 8 ตัวอักษร)" type={visible ? 'text' : 'password'} required minLength={8} maxLength={128} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} className="field pr-20"/><button type="button" onClick={() => setVisible(!visible)} aria-label={visible ? 'ซ่อนรหัสผ่าน' : 'แสดงรหัสผ่าน'} className="absolute right-4 top-4 text-xs text-school-muted">{visible ? 'ซ่อน' : 'แสดง'}</button></div></label>
           {error && <p role="alert" className="rounded-xl bg-pink-50 p-3 text-sm text-rose-700">{error}</p>}
           <button disabled={busy} className="primary auth-submit">{busy ? 'กำลังดำเนินการ…' : mode === 'signup' ? 'สร้างบัญชี →' : 'เข้าสู่ระบบ →'}</button>
+          {mode === 'login' && <p className="text-center text-xs leading-5 text-school-muted">ระบบจะจดจำการเข้าสู่ระบบบนอุปกรณ์นี้จนกว่าคุณจะกดออกจากระบบ</p>}
         </form>
         {mode === 'signup' && <p className="mt-4 text-xs leading-6 text-school-muted">โปรดจำชื่อผู้ใช้และรหัสผ่านไว้ ระบบนี้ไม่มีการกู้รหัสผ่านทางอีเมล</p>}
         <p className="auth-switch">{mode === 'login' ? 'ยังไม่มีบัญชี? ' : 'มีบัญชีอยู่แล้ว? '}<Link href={mode === 'login' ? '/signup' : '/login'} className="font-bold text-school-pink">{mode === 'login' ? 'สมัครสมาชิกที่นี่' : 'เข้าสู่ระบบที่นี่'} →</Link></p>

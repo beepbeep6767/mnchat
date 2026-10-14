@@ -8,7 +8,9 @@ export async function createClient() {
   const store = await cookies();
   return createServerClient<Database>(url, key, {
     cookies: { getAll: () => store.getAll(), setAll: values => {
-      values.forEach(({ name, value, options }) => store.set(name, value, options));
+      try { values.forEach(({ name, value, options }) => store.set(name, value, options)); }
+      catch { /* Proxy writes refreshed cookies on server component requests. */ }
     } }
   });
 }
+
