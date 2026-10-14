@@ -88,7 +88,7 @@ export default function Page() {
   }
   return <div className="chat-workspace">
     <aside className="room-panel"><h2 className="room-heading">เพื่อนและแชท</h2>
-      <div className="friend-widget"><h3>เพิ่มเพื่อน ♡</h3><label className="sr-only" htmlFor="search-friend">ค้นหาเพื่อน</label><input id="search-friend" value={search} onChange={event => setSearch(event.target.value)} placeholder="ค้นหาชื่อเพื่อน…" className="field room-search"/>
+      <div className="friend-widget"><h3>เพิ่มเพื่อน ♡</h3><label className="sr-only" htmlFor="search-friend">ค้นหาเพื่อน</label><div className="friend-search-control"><input id="search-friend" value={search} onChange={event => setSearch(event.target.value)} onKeyDown={event => { if (event.key === 'Escape') setSearch(''); }} placeholder="ค้นหาชื่อเพื่อน…" className="field room-search"/>{search && <button type="button" className="friend-search-clear" onClick={() => setSearch('')} aria-label="ล้างคำค้นหา">×</button>}</div>
         <p className="friend-hint">เมื่อทั้งสองคนกดเพิ่มเพื่อน แชทส่วนตัวจะเปิดทันที</p>
         <Status loading={loading} error={error} retry={() => void load()}/>
         <div className="friend-results">{results.slice(0, 30).map(person => <div className="friend-result" key={person.id}><span className="letter-avatar">{person.username[0].toUpperCase()}</span><span className="friend-name">{person.username}</span><button type="button" className="soft-button" disabled={busyId === person.id || outgoing.has(person.id)} onClick={() => void addFriend(person)}>{outgoing.has(person.id) ? 'รอเพื่อนเพิ่ม' : incoming.has(person.id) ? 'เพิ่มกลับ' : 'เพิ่มเพื่อน'}</button></div>)}</div>

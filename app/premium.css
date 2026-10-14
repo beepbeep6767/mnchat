@@ -43,6 +43,10 @@ body { color:var(--ink); background:#f5f6f8; }
 .room-link { color:var(--ink); border-left:3px solid transparent; }
 .room-link.selected { background:#f2f0ff; border-left-color:var(--accent); }
 .room-avatar,.letter-avatar { color:var(--accent-dark); background:#edeafe; border:1px solid #ded8fa; box-shadow:none; }
+.friend-search-control { position:relative; }
+.friend-search-control .room-search { padding-right:42px; }
+.friend-search-clear { position:absolute; top:50%; right:9px; transform:translateY(-50%); width:29px; height:29px; border-radius:9px; color:var(--muted); font-size:21px; line-height:1; }
+.friend-search-clear:hover,.friend-search-clear:focus-visible { background:#edeafe; color:var(--accent-dark); }
 .conversation-panel>header { height:76px; border-color:var(--line); }
 .conversation-panel>div { background:#fafbfe; }
 .conversation-panel article.items-end>p { background:var(--accent); color:white; box-shadow:0 8px 19px #6255d827; }
