@@ -37,4 +37,3 @@ export function Composer({ table, recipientId, onSent }: { table: 'messages' | '
     {error && <p role="alert" className="mt-3 text-sm text-rose-700">{error}</p>}
   </form>;
 }
-

@@ -7,7 +7,7 @@ import { Icon } from './icon';
 import { useProfile } from './school-provider';
 import { createClient } from '@/lib/supabase/client';
 import { errorMessage } from '@/lib/helpers';
-const navigation = [{ href: '/feed', label: 'หน้าแรก / ฟีดข่าว', icon: 'home' }, { href: '/chat', label: 'แชท', icon: 'chat' }, { href: '/honor', label: 'เกียรติยศ', icon: 'crown' }] as const;
+const navigation = [{ href: '/feed', label: 'หน้าแรก / ฟีดข่าว', icon: 'home' }, { href: '/chat', label: 'แชท', icon: 'chat' }, { href: '/honor', label: 'เกียรติยศ', icon: 'crown' }, { href: '/ratings', label: 'โหวตดาว', icon: 'heart' }] as const;
 export function AppShell({ children }: { children: React.ReactNode }) {
   const profile = useProfile(); const pathname = usePathname(); const router = useRouter();
   const [error, setError] = useState(''); const [busy, setBusy] = useState(false);
@@ -25,4 +25,3 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <nav aria-label="เมนูมือถือ" className="mobile-navigation fixed bottom-0 left-0 right-0 z-20 flex justify-around border-t border-blue-100 bg-white/95 py-3 lg:hidden">{navigation.map(item => <Link key={item.href} href={item.href} aria-current={pathname === item.href ? 'page' : undefined} className={`flex flex-col items-center gap-1 px-3 text-xs ${pathname === item.href ? 'font-bold text-school-pink' : 'text-school-muted'}`}><Icon name={item.icon} size={24}/>{item.label}</Link>)}</nav>
   </div>;
 }
-

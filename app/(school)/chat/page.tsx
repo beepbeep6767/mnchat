@@ -8,6 +8,7 @@ import { useProfile } from '@/components/school-provider';
 import { Composer } from '@/components/composer';
 import { TimelineItem } from '@/components/timeline-item';
 import { Status } from '@/components/status';
+import { CallAvailability } from '@/components/call-availability';
 
 function Conversation({ friend }: { friend: Profile }) {
   const timeline = useTimeline('messages', friend.id);
@@ -95,10 +96,10 @@ export default function Page() {
         {!loading && !results.length && <p className="friend-hint">ไม่พบเพื่อนที่ค้นหา</p>}
       </div>
       <h3 className="friend-list-heading">เพื่อนของฉัน ({friends.length})</h3>
+      <CallAvailability friends={friends} selected={selected} myId={me.id}/>
       <div className="room-list">{friends.map(person => <button key={person.id} onClick={() => setSelected(person.id)} className={`room-link ${selected === person.id ? 'selected' : ''}`}><span className="room-avatar">{person.username[0].toUpperCase()}</span><b>{person.username}</b><span className="mt-1 hidden text-xs lg:block">เปิดแชทส่วนตัว</span></button>)}</div>
       {!loading && !friends.length && <p className="friend-hint">ยังไม่มีเพื่อน ค้นหาชื่อแล้วกดเพิ่มเพื่อนเลย</p>}
     </aside>
     {friend ? <Conversation key={friend.id} friend={friend}/> : <div className="glass conversation-empty">เลือกเพื่อนเพื่อเริ่มแชท ♡</div>}
   </div>;
 }
-
