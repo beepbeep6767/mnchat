@@ -51,7 +51,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
         {mode === 'signup' && <p className="mt-4 text-xs leading-6 text-school-muted">โปรดจำชื่อผู้ใช้และรหัสผ่านไว้ ระบบนี้ไม่มีการกู้รหัสผ่านทางอีเมล</p>}
         <p className="auth-switch">{mode === 'login' ? 'ยังไม่มีบัญชี? ' : 'มีบัญชีอยู่แล้ว? '}<Link href={mode === 'login' ? '/signup' : '/login'} className="font-bold text-school-pink">{mode === 'login' ? 'สมัครสมาชิกที่นี่' : 'เข้าสู่ระบบที่นี่'} →</Link></p>
       </section>
-      <footer className="auth-footer"><span>♧ เชื่อมต่ออย่างปลอดภัย</span><span>♡ พื้นที่ดี ๆ ของเพื่อน</span><span>♙ MN School Community</span></footer>
+      <footer className="auth-footer"><span>♧ เชื่อมต่ออย่างปลอดภัย</span><span>♡ พื้นที่ดี ๆ ของเพื่อน</span></footer>
     </div>
   </main>;
 }
+

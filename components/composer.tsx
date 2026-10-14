@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/client';
 import { errorMessage } from '@/lib/helpers';
 import { useProfile } from './school-provider';
 import { Icon } from './icon';
-export function Composer({ table, roomId, onSent }: { table: 'messages' | 'posts'; roomId?: string; onSent: () => Promise<void> }) {
+export function Composer({ table, recipientId, onSent }: { table: 'messages' | 'posts'; recipientId?: string; onSent: () => Promise<void> }) {
   const profile = useProfile(); const [content, setContent] = useState('');
   const [busy, setBusy] = useState(false); const [error, setError] = useState(''); const [lastSent, setLastSent] = useState(0);
   const max = table === 'messages' ? 2000 : 5000;
@@ -17,7 +17,7 @@ export function Composer({ table, roomId, onSent }: { table: 'messages' | 'posts
     try {
       const client = createClient();
       const response = table === 'messages'
-        ? await client.from('messages').insert({ content:text, author_id:profile.id, room_id:roomId ?? '' })
+        ? await client.from('messages').insert({ content:text, author_id:profile.id, recipient_id:recipientId ?? '' })
         : await client.from('posts').insert({ content:text, author_id:profile.id });
       if (response.error) throw response.error;
       setContent(''); setLastSent(Date.now()); await onSent();
@@ -30,3 +30,4 @@ export function Composer({ table, roomId, onSent }: { table: 'messages' | 'posts
     {error && <p role="alert" className="mt-3 text-sm text-rose-700">{error}</p>}
   </form>;
 }
+

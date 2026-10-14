@@ -9,6 +9,19 @@ html, body { min-height: 100%; margin: 0; }
 .mn-body { max-width: none; min-height: calc(100dvh - 110px); }
 .mn-content { background: radial-gradient(ellipse at 100% 0, #ffe7f48c, transparent 48%), radial-gradient(ellipse at 5% 100%, #d4edff, transparent 65%); }
 .room-panel { overflow-y: auto; }
+.chat-workspace { grid-template-columns: 320px minmax(0, 1fr); }
+.school-poster { margin: 24px 12px 0; height: 330px; border-radius: 18px; background: url('/student-banner.webp') 67% center / cover no-repeat; padding: 18px 12px; }
+.school-poster strong { font: 700 21px/1.35 Tahoma, Arial, sans-serif; color: #eb5aa5; text-shadow: 1px 1px white, -1px -1px white, 0 2px 6px white; }
+.friend-widget { padding: 14px; border-radius: 16px; background: #f6faff; }
+.friend-widget h3, .friend-list-heading { font-size: 15px; font-weight: 700; margin-bottom: 12px; }
+.friend-list-heading { margin: 20px 0 8px; }
+.friend-hint { margin: 10px 0; color: #7189ac; font-size: 12px; line-height: 1.6; }
+.friend-results { max-height: 260px; overflow-y: auto; }
+.friend-result { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #dceafa; }
+.friend-result .letter-avatar { width: 34px; height: 34px; flex: none; }
+.friend-result .friend-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+.friend-result .soft-button { flex: none; padding: 6px 9px; font-size: 11px; }
+.conversation-empty { display: grid; place-items: center; min-height: 550px; color: #7189ac; }
 .conversation-panel { overflow: hidden; }
 .conversation-panel > header { flex-shrink: 0; }
 .conversation-panel > div { min-height: 0; }
@@ -38,6 +51,7 @@ html, body { min-height: 100%; margin: 0; }
   .auth-signup .auth-fields { gap: 10px; }
 }
 @media (max-width: 767px) {
+  .chat-workspace { display: flex; }
   .auth-page { padding: 0; }
   .auth-scene { min-height: 100dvh; }
   .auth-top { padding: 25px 18px; }
@@ -58,3 +72,4 @@ html, body { min-height: 100%; margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+

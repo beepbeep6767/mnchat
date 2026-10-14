@@ -3,9 +3,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { createClient } from './supabase/client';
 import { errorMessage } from './helpers';
 import type { Message, Post, Profile } from '@/types/database';
+import { useProfile } from '@/components/school-provider';
 type Entry = Message | Post;
 const PAGE_SIZE = 30;
-export function useTimeline(table: 'messages' | 'posts', roomId?: string) {
+export function useTimeline(table: 'messages' | 'posts', peerId?: string) {
+  const profile = useProfile();
   const [entries, setEntries] = useState<Entry[]>([]);
   const [authors, setAuthors] = useState<Record<string, Profile>>({});
   const [loading, setLoading] = useState(true); const [error, setError] = useState('');
@@ -17,14 +19,14 @@ export function useTimeline(table: 'messages' | 'posts', roomId?: string) {
     return Array.from(combined.values()).sort((a,b) => b.created_at.localeCompare(a.created_at) || b.id.localeCompare(a.id));
   }), []);
   const fetchPage = useCallback(async (older = false) => {
-    if (table === 'messages' && !roomId) { setLoading(false); return; }
+    if (table === 'messages' && !peerId) { setLoading(false); return; }
     if (older && busy.current) return;
     const current = generation.current;
     if (older) { busy.current = true; setLoadingMore(true); } else setLoading(true); setError('');
     try {
       const client = createClient();
       const source = table === 'messages'
-        ? client.from('messages').select('*').eq('room_id', roomId ?? '')
+        ? client.from('messages').select('*').or(`and(author_id.eq.${profile.id},recipient_id.eq.${peerId}),and(author_id.eq.${peerId},recipient_id.eq.${profile.id})`)
         : client.from('posts').select('*');
       let query = source.order('created_at', { ascending:false }).order('id', { ascending:false }).limit(PAGE_SIZE);
       if (older && cursor.current) {
@@ -49,7 +51,7 @@ export function useTimeline(table: 'messages' | 'posts', roomId?: string) {
       }
     } catch (failure) { if (current === generation.current) setError(errorMessage(failure)); }
     finally { if (current === generation.current) { if (older) { busy.current = false; setLoadingMore(false); } else setLoading(false); } }
-  }, [table, roomId, merge]);
+  }, [table, peerId, profile.id, merge]);
   useEffect(() => {
     generation.current += 1; busy.current = false; cursor.current = undefined;
     setEntries([]); setAuthors({}); setHasMore(false); setLoadingMore(false);
@@ -57,8 +59,8 @@ export function useTimeline(table: 'messages' | 'posts', roomId?: string) {
     let active = true; let cleanup: (() => void) | undefined;
     try {
       const client = createClient();
-      const channel = client.channel(`timeline-${table}-${roomId ?? 'feed'}`)
-        .on('postgres_changes', { event: 'INSERT', schema:'public', table, ...(roomId ? { filter:`room_id=eq.${roomId}` } : {}) }, () => { if (active) void fetchPage(); })
+      const channel = client.channel(`timeline-${table}-${peerId ?? 'feed'}`)
+        .on('postgres_changes', { event: 'INSERT', schema:'public', table }, () => { if (active) void fetchPage(); })
         .on('postgres_changes', { event: 'DELETE', schema:'public', table }, payload => {
           if (active && typeof payload.old.id === 'string') setEntries(previous => previous.filter(row => row.id !== payload.old.id));
         })
@@ -70,7 +72,13 @@ export function useTimeline(table: 'messages' | 'posts', roomId?: string) {
       cleanup = () => { void client.removeChannel(channel).then(result => { if (result !== 'ok') console.warn('Realtime cleanup incomplete'); }).catch(() => console.warn('Realtime cleanup failed')); };
     } catch (failure) { setError(errorMessage(failure)); }
     return () => { active = false; generation.current += 1; cleanup?.(); };
-  }, [fetchPage, table, roomId, revision]);
+  }, [fetchPage, table, peerId, revision]);
+  useEffect(() => {
+    if (table !== 'posts') return;
+    const timer = window.setInterval(() => setRevision(value => value + 1), 60_000);
+    return () => window.clearInterval(timer);
+  }, [table]);
   const remove = (id: string) => setEntries(previous => previous.filter(row => row.id !== id));
   return { entries, authors, loading, error, hasMore, loadingMore, loadMore: () => void fetchPage(true), reload: () => setRevision(value => value+1), refresh: () => fetchPage(), remove };
 }
+

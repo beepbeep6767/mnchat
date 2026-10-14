@@ -1,6 +1,7 @@
 export type Profile = { id: string; username: string; grade: number | null; full_name: string | null; created_at: string };
 export type Room = { id: string; name: string; description: string; created_at: string };
-export type Message = { id: string; room_id: string; author_id: string; content: string; created_at: string };
+export type Message = { id: string; recipient_id: string; author_id: string; content: string; created_at: string };
+export type FriendRequest = { requester_id: string; recipient_id: string; created_at: string };
 export type Post = { id: string; author_id: string; content: string; created_at: string };
 export type Kudos = { id: string; sender_id: string; recipient_id: string; created_at: string };
 export type Ranking = { id: string; username: string; grade: number | null; score: number };
@@ -9,8 +10,8 @@ export type Database = {
   public: {
     Tables: {
       profiles: Table<Profile, never, Pick<Profile, 'full_name'>>;
-      rooms: Table<Room, never, never>;
-      messages: Table<Message, Pick<Message, 'room_id' | 'author_id' | 'content'>, Pick<Message, 'content'>>;
+      friend_requests: Table<FriendRequest, Pick<FriendRequest, 'requester_id' | 'recipient_id'>, never>;
+      messages: Table<Message, Pick<Message, 'recipient_id' | 'author_id' | 'content'>, Pick<Message, 'content'>>;
       posts: Table<Post, Pick<Post, 'author_id' | 'content'>, Pick<Post, 'content'>>;
       kudos: Table<Kudos, never, never>;
     };
@@ -20,3 +21,4 @@ export type Database = {
     CompositeTypes: Record<string, never>;
   };
 };
+
